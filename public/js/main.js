@@ -53,7 +53,7 @@ Layout Partials.
 By default the partials are loaded through AngularJS ng-include directive.
 ***/
 /* Setup Layout Part - Header */
-BlocksApp.controller('HeaderController', ['$scope', '$location', 'setupObj', function($scope, $location, setupObj) {
+BlocksApp.controller('HeaderController', ['$scope', '$location', function($scope, $location) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initHeader(); // init header
     });
@@ -64,36 +64,42 @@ BlocksApp.controller('HeaderController', ['$scope', '$location', 'setupObj', fun
         $scope.form.searchInput="";
         $scope.form.searchForm.$setPristine();
         $scope.form.searchForm.$setUntouched();
-        if (isAddress(search))
             $location.path("/addr/" + search);
+            if(search.length==16)//master node address
+            $location.path("/masternode/" + search);
+        else if(search.length==18){//master node address
+            if(search.indexOf("0x")==0){
+                $location.path("/masternode/" + search.substr(3));
+            }
+        }
         else if (isTransaction(search))
             $location.path("/tx/" + search);
         else if (!isNaN(search))
             $location.path("/block/" + search);
+        else if(search.length<10)//contractlist search
+            $location.path("/contractlist/" + search);
+        else if(search.length<14)//tokenlist search
+            $location.path("/tokenlist/" + search);
         else
             $scope.form.searchInput = search;
     }
-    setupObj.then(function(res) {
-        $scope.settings = res;
-    });
 }]);
 /* Search Bar */
-BlocksApp.controller('PageHeadController', ['$scope', 'setupObj', function($scope, setupObj) {
+BlocksApp.controller('PageHeadController', ['$scope', function($scope) {
     $scope.$on('$includeContentLoaded', function() {
 
     });
-    setupObj.then(function(res) {
-        $scope.settings = res;
-    });
 }]);
 /* Setup Layout Part - Footer */
-BlocksApp.controller('FooterController', ['$scope', 'setupObj', function($scope, setupObj) {
+BlocksApp.controller('FooterController', ['$scope', '$rootScope', function($scope, $rootScope) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initFooter(); // init footer
     });
-    setupObj.then(function(res) {
-        $scope.settings = res;
-    });
+    $scope.selCurrency = 'USD';
+    $rootScope.$selectedCurrency = 'USD';
+    $scope.changeCurrency = function(cur) {
+        $rootScope.$selectedCurrency = cur;
+    };
 }]);
 /* Setup Rounting For All Pages */
 BlocksApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
@@ -119,7 +125,7 @@ BlocksApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
             }
         })
         .state('address', {
-            url: "/addr{dummy:(?:ess)?}/{hash}",
+            url: "/addr/{hash}",
             templateUrl: "views/address.html",
             data: {pageTitle: 'Address'},
             controller: "AddressController",
@@ -132,13 +138,35 @@ BlocksApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
                              '/js/controllers/AddressController.js',
                             '/plugins/datatables/datatables.min.css',
                             '/plugins/datatables/datatables.bootstrap.css',
-                            '/plugins/datatables/datatables.all.min.js',
+                            // '/plugins/datatables/datatables.all.min.js',
                             '/plugins/datatables/datatable.min.js'
                         ]
                     });
                 }]
             }
         })
+        .state('addressList', {
+            url: "/addressList/{type}",
+            templateUrl: "views/addressList.html",
+            data: {pageTitle: 'Address List'},
+            controller: "AddressListController",
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'BlocksApp',
+                        insertBefore: '#ng_load_plugins_before', 
+                        files: [
+                             '/js/controllers/AddressListController.js',
+                             '/plugins/datatables/datatables.min.css',
+                             '/plugins/datatables/datatables.bootstrap.css',
+                             // '/plugins/datatables/datatables.all.min.js',
+                             '/plugins/datatables/datatable.min.js'
+                        ]
+                    });
+                }]
+            }
+        })
+
         .state('accounts', {
             url: "/accounts",
             templateUrl: "views/accounts.html",
@@ -153,7 +181,7 @@ BlocksApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
                             '/js/controllers/AccountsController.js',
                             '/plugins/datatables/datatables.min.css',
                             '/plugins/datatables/datatables.bootstrap.css',
-                            '/plugins/datatables/datatables.all.min.js',
+                            // '/plugins/datatables/datatables.all.min.js',
                             '/plugins/datatables/datatable.min.js'
                         ]
                     });
@@ -178,24 +206,6 @@ BlocksApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
             }
         })
 
-        .state('uncle', {
-            url: "/uncle/*number",
-            templateUrl: "views/block.html",
-            data: {pageTitle: 'Uncle'},
-            controller: "UncleController",
-            resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                    return $ocLazyLoad.load({
-                        name: 'BlocksApp',
-                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
-                        files: [
-                             '/js/controllers/UncleController.js'
-                        ]
-                    });
-                }]
-            }
-        })
-
         .state('tx', {
             url: "/tx/{hash}",
             templateUrl: "views/tx.html",
@@ -213,24 +223,7 @@ BlocksApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
                 }]
             }
         })
-        .state('viewcontract', {
-            url: "/contract",
-            templateUrl: "views/contract.html",
-            data: {pageTitle: 'Verify Contract'},
-            controller: "ContractController",
-            resolve: {
-                deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                    return $ocLazyLoad.load({
-                        name: 'BlocksApp',
-                        insertBefore: '#ng_load_plugins_before',
-                        files: [
-                             '/js/controllers/ContractController.js',
-                             '/js/custom.js'
-                         ]
-                     });
-                }]
-            }
-        })
+
         .state('contract', {
             url: "/contract/{addr}",
             templateUrl: "views/contract.html",
@@ -249,27 +242,27 @@ BlocksApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
                 }]
             }
         })
-        .state('stats', {
-            url: "/stats/{chart}",
-            templateUrl: "views/stats/index.html",
-            data: {pageTitle: 'Statistics'},
-            controller: "StatsController",
+        .state('verifycontract', {
+            url: "/verifycontract/{addr}",
+            templateUrl: "views/contractVerify.html",
+            data: {pageTitle: 'Verify Contract'},
+            controller: "ContractVerifyController",
             resolve: {
-                deps: ['$ocLazyLoad', '$stateParams', function($ocLazyLoad, $stateParams) {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
-                        insertBefore: '#ng_load_plugins_before', // load the above css files before '#ng_load_plugins_before'
+                        name: 'BlocksApp',
+                        insertBefore: '#ng_load_plugins_before', 
                         files: [
-                             '/js/controllers/StatsController.js',
-                             '/css/stats.css',
-                             "/plugins/async.min.js",
-                             "/plugins/moment/moment.min.js"
-                        ]
-                    });
+                             '/js/controllers/ContractVerifyController.js',
+                             '/js/custom.js'
+                         ]
+                     });
                 }]
             }
         })
+        
         .state('tokenlist', {
-            url: "/token",
+            url: "/tokenlist/{token}?",
             templateUrl: "views/tokenlist.html",
             data: {pageTitle: 'Tokens'},
             controller: "TokenListController",
@@ -277,7 +270,7 @@ BlocksApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
                 deps: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         name: 'BlocksApp',
-                        insertBefore: '#ng_load_plugins_before',
+                        insertBefore: '#ng_load_plugins_before', 
                         files: [
                              '/js/controllers/TokenListController.js'
                         ]
@@ -285,6 +278,24 @@ BlocksApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
                 }]
             }
         })
+        .state('contractlist', {
+            url: "/contractlist/{token}?",
+            templateUrl: "views/contractlist.html",
+            data: {pageTitle: 'contractlist'},
+            controller: "ContractListController",
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'BlocksApp',
+                        insertBefore: '#ng_load_plugins_before', 
+                        files: [
+                             '/js/controllers/ContractListController.js'
+                        ]
+                    });
+                }]
+            }
+        })
+
         .state('token', {
             url: "/token/{hash}",
             templateUrl: "views/token.html",
@@ -302,6 +313,94 @@ BlocksApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
                 }]
             }
         })
+        
+        .state('tokenAcc', {
+            url: "/tokenAcc/{hash}",
+            templateUrl: "views/token.html",
+            data: {pageTitle: 'Tokens'},
+            controller: "TokenController",
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'BlocksApp',
+                        insertBefore: '#ng_load_plugins_before', 
+                        files: [
+                             '/js/controllers/TokenController.js'
+                        ]
+                    });
+                }]
+            }
+        })
+
+        .state('masternode', {
+            url: "/masternode/{witness}",
+            templateUrl: "views/witness.html",
+            data: {pageTitle: 'Masternode'},
+            controller: "WitnessController",
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'BlocksApp',
+                        insertBefore: '#ng_load_plugins_before', 
+                        files: [
+                             '/js/controllers/WitnessController.js'
+                        ]
+                    });
+                }]
+            }
+        })
+        .state('masternodeList', {
+            url: "/masternodeList",
+            templateUrl: "views/witnessList.html",
+            data: {pageTitle: 'Masternode List'},
+            controller: "WitnessListController",
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'BlocksApp',
+                        insertBefore: '#ng_load_plugins_before', 
+                        files: [
+                             '/js/controllers/WitnessListController.js'
+                        ]
+                    });
+                }]
+            }
+        })
+        .state('publicAPIDoc', {
+            url: "/publicAPIDoc",
+            templateUrl: "views/publicAPIDoc.html",
+            data: {pageTitle: 'Public API Document'},
+            controller: "PublicAPIDocController",
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'BlocksApp',
+                        insertBefore: '#ng_load_plugins_before', 
+                        files: [
+                             '/js/controllers/PublicAPIDocController.js'
+                        ]
+                    });
+                }]
+            }
+        })
+        .state('dao', {
+            url: "/dao",
+            templateUrl: "views/dao.html",
+            data: {pageTitle: 'theDAO'},
+            controller: "DAOController",
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'BlocksApp',
+                        insertBefore: '#ng_load_plugins_before',
+                        files: [
+                             '/js/controllers/DAOController.js'
+                        ]
+                    });
+                }]
+            }
+        })
+
         .state('err404', {
             url: "/err404/{thing}/{hash}",
             templateUrl: "views/err_404.html",
@@ -325,11 +424,8 @@ BlocksApp.filter('timeDuration', function() {
     return getDuration(timestamp).toString();
   };
 })
-.filter('totalDifficulty', function() {
-  return function(hashes) {
-    return getDifficulty(hashes);
-  };
-})
+
+
 .filter('teraHashes', function() {
     return function(hashes) {
         var result = hashes / Math.pow(1000, 4);

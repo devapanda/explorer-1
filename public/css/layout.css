@@ -655,7 +655,7 @@
     position: relative;
     display: inline-block;
     float: right;
-    width: 400px;
+    width: 176px;
     transition: width .4s;
     margin-top: 8px;
     -webkit-border-radius: 4px;
@@ -697,7 +697,7 @@
 }
 
 .search-form.open {
-    width: 500px !important;
+    width: 300px !important;
     transition: width .4s;
 }
 

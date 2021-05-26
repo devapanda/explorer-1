@@ -21,20 +21,15 @@ angular.module('BlocksApp').controller('AccountsController', function($statePara
 
           // fixup data to show percentages
           var newdata = resp.data.data.map(function(item) {
-            var num = item[0];
-            var addr = item[1];
-            var type = item[2];
-            var balance = item[3];
-            var lastmod = item[4];
-            return [num, addr, type, balance, (balance / $scope.totalSupply) * 100, lastmod];
+            return [item[0], item[1], item[2], item[3], (item[3] / $scope.totalSupply) * 100, item[4]];
           });
           resp.data.data = newdata;
           callback(resp.data);
         });
       },
       lengthMenu: [
-        [20, 50, 100, 150, 200, 500],
-        [20, 50, 100, 150, 200, 500] // change per page values here
+        [20, 50, 100, 150, -1],
+        [20, 50, 100, 150, "All"] // change per page values here
       ],
       pageLength: 20,
       order: [
@@ -47,31 +42,13 @@ angular.module('BlocksApp').controller('AccountsController', function($statePara
         infoFiltered: "(filtered from _MAX_ total accounts)"
       },
       columnDefs: [
-        { orderable: false, "targets": [0,1,4] },
+        { orderable: false, "targets": [0,1,2,4] },
         {
           render:
             function(data, type, row) {
               return '<a href="/addr/' + data +'">' + data + '</a>'
             },
           targets: [1]
-        },
-        {
-          render:
-            function(data, type, row) {
-              if (data & 0x1) {
-                return "Contract";
-              }
-              if (data & 0x4) { // user defined account type
-                var accountType = data >> 3;
-                accountType = accountType.toString();
-                if ($scope.settings.accountTypes && $scope.settings.accountTypes[accountType]) {
-                  return $scope.settings.accountTypes[accountType];
-                }
-                return "Genesis Alloc";
-              }
-              return "Account";
-            },
-          targets: [2]
         },
         {
           render:

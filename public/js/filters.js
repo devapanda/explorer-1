@@ -26,26 +26,10 @@ var getDifficulty = function(hashes) {
     unit = 'G';
   }
 
-  if(hashes >= Math.pow(1000, 4) && hashes < Math.pow(1000, 5)) {
+  if(hashes >= Math.pow(1000, 4) ) {
     result = hashes / Math.pow(1000, 4);
     unit = 'T';
   }
-
-  if(hashes >= Math.pow(1000, 5) && hashes < Math.pow(1000, 6)) {
-    result = hashes / Math.pow(1000, 5);
-    unit = 'P';
-  }
-
-  if(hashes >= Math.pow(1000, 6) && hashes < Math.pow(1000, 7)) {
-    result = hashes / Math.pow(1000, 6);
-    unit = 'E';
-  }
-
-  if(hashes >= Math.pow(1000, 7) ) {
-    result = hashes / Math.pow(1000, 7);
-    unit = 'Z';
-  }
-  
   return result.toFixed(2) + ' ' + unit + 'H';
 }
 
@@ -58,10 +42,10 @@ var getDuration = function(timestamp){
     var units = [
         {label:"millis",    mod:1000},
         {label:"seconds",   mod:60},
-        {label:"mins",   mod:60},
+        {label:"mins",      mod:60},
         {label:"hours",     mod:24},
         {label:"days",      mod:365},
-        {label:"years",      mod:1000}
+        {label:"years",     mod:1000}
     ];
     // calculate the individual unit values
     units.forEach(function(u){

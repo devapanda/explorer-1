@@ -9,9 +9,9 @@ const BigNumber = require('bignumber.js');
 const _ = require('lodash');
 
 const asyncL = require('async');
-const Web3 = require('web3');
+const Web3 = require('xdc3');
 
-const ERC20ABI = require('human-standard-token-abi');
+let ERC20ABI = require('../contractTpl/contracts').ERC20ABI
 
 const fetch = require('node-fetch');
 
@@ -36,7 +36,7 @@ const ERC20_METHOD_DIC = { '0xa9059cbb': 'transfer', '0xa978501e': 'transferFrom
  * bulkSize: size of array in block to use bulk operation
  */
 // load config.json
-const config = { nodeAddr: 'localhost', wsPort: 8546, bulkSize: 100 };
+const config = { nodeAddr: 'localhost', wsPort: 2546, bulkSize: 100 };
 try {
   var local = require('../config.json');
   _.extend(config, local);
@@ -54,7 +54,7 @@ try {
 
 console.log(`Connecting ${config.nodeAddr}:${config.wsPort}...`);
 // Sets address for RPC WEB3 to connect to, usually your node IP address defaults ot localhost
-const web3 = new Web3(new Web3.providers.WebsocketProvider(`ws://${config.nodeAddr}:${config.wsPort.toString()}`));
+const web3 = new Web3(new Web3.providers.WebsocketProvider(config.WSURL));
 
 const normalizeTX = async (txData, receipt, blockData) => {
   const tx = {
@@ -166,8 +166,12 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
           contractdb.owner = txData.from;
           contractdb.blockNumber = blockData.number;
           contractdb.creationTransaction = txData.hash;
+          //console.log(contractdb,"contractdb")
+
           try {
             const call = await web3.eth.call({ to: contractAddress, data: web3.utils.sha3('totalSupply()') });
+            // console.log(contractdb,"contractdb")
+
             if (call === '0x') {
               isTokenContract = false;
             } else {
@@ -177,9 +181,11 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
                 contractdb.decimals = await Token.methods.decimals().call();
                 contractdb.symbol = await Token.methods.symbol().call();
                 contractdb.totalSupply = await Token.methods.totalSupply().call();
+                // console.log(contractdb,"contractdb")
               } catch (err) {
                 isTokenContract = false;
               }
+              // console.log(contractdb,"contractdb")
             }
           } catch (err) {
             isTokenContract = false;
@@ -200,6 +206,7 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
               if (err) {
                 console.log(err);
               }
+    
             },
           );
         } else {
@@ -234,11 +241,17 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
                 if (err) {
                   console.log(err);
                 }
+                else{
+                  console.log(data,"asasas",transfer)
+                }
               },
             );
           }
         }
       }
+      // if (!(tx.to ==BlockSigners || tx.to ==RandomizeSMC)){
+      //   self.bulkOps.push(tx);
+      // }
       self.bulkOps.push(tx);
     }
     if (!('quiet' in config && config.quiet === true)) {
@@ -264,9 +277,9 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
     });
 
     // setup miners
-    miners.forEach((miner) => {
-      data[miner.address] = miner;
-    });
+    // miners.forEach((miner) => {
+    //   data[miner.address] = miner;
+    // });
 
     const accounts = Object.keys(data);
 
@@ -286,7 +299,7 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
             data[account].type = 1; // contract type
           }
 
-          web3.eth.getBalance(account, blockNumber, (err, balance) => {
+          web3.eth.getBalance(account, (err, balance) => {
             if (err) {
               console.log(err);
               console.log(`ERROR: fail to getBalance(${account})`);
@@ -477,13 +490,14 @@ const runPatcher = async (config, startBlock, endBlock) => {
 
       const lastMissingBlock = docs[0].number + 1;
       const currentBlock = await web3.eth.getBlockNumber();
-      runPatcher(config, lastMissingBlock, currentBlock - 1);
+      runPatcher(config, currentBlock - 10000, currentBlock - 1);
     });
     return;
   }
 
   const missingBlocks = endBlock - startBlock + 1;
   if (missingBlocks > 0) {
+    console.log('Patching from #' + startBlock + ' to #' + endBlock);
     if (!('quiet' in config && config.quiet === true)) {
       console.log(`Patching from #${startBlock} to #${endBlock}`);
     }
@@ -514,7 +528,8 @@ const runPatcher = async (config, startBlock, endBlock) => {
     // flush
     writeBlockToDB(config, null, true);
     writeTransactionsToDB(config, null, true);
-
+    currentBlock = await web3.eth.getBlockNumber();
+    setTimeout(function() { runPatcher(config, currentBlock - 1000, currentBlock); }, 600000);
     console.log('*** Block Patching Completed ***');
   }
 };
@@ -590,10 +605,10 @@ if (config.syncAll === true) {
 }
 
 // Start price sync on DB
-if (config.settings.useFiat) {
-  getQuote();
+// if (config.settings.useFiat) {
+//   getQuote();
 
-  setInterval(() => {
-    getQuote();
-  }, quoteInterval);
-}
+//   setInterval(() => {
+//     getQuote();
+//   }, quoteInterval);
+// }

@@ -1,0 +1,200 @@
+       <!-- start Address Details -->
+       <section id="blockDetails" class="mb-4">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-12 safari-float-left">
+                    <div class="block-header d-flex justify-content-between align-items-center">
+                        <h3 class="blockDetails-header-title text-break text-center text-md-left"><i class="far mr-1"></i> MasterNode <span class="text-secondary">  {{witness}}</span></h3>
+                    </div>
+                </div>
+
+                <!-- start Overview -->
+                <div class="col-lg-7 mb-4 mb-lg-0 safari-float-left">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h2 class="card-header-title">Overview</h2>
+                        </div>
+
+                        <div id="block-overview" class="card-body">
+
+                            <div class="row align-items-center">
+                                <div class="col-md-4 fw6 mb-1">
+                                    Masternode  </div>
+                                <div class="col-md-8">
+                                    <div>{{ witness}}</div>
+                                    <!-- <div>
+                                        {{witness.substr(0,34)}}... </div> -->
+                                </div>
+                            </div>
+                            <hr class="hr-space">
+                            <div class="row align-items-center">
+                                <div class="col-md-4 fw6 mb-1">
+                                   Total Stake </div>
+                                <div class="col-md-8">
+                                    <div>
+                                        {{mnStake}} </a></div>
+                                </div>
+                            </div>
+                            <hr class="hr-space">
+                            <div class="row align-items-center">
+                                <div class="col-md-4 fw6 mb-1">
+                                    MasterNode KYC Docs </div>
+                                <div class="col-md-8">
+                                    <div>
+                                        <a href="https://kycDocs.XinFin.Network/{{kycDocs}}" target="_blank"> {{kycDocs.substr(0,43)}}</a>
+                                        </div>
+                                </div>
+                            </div>
+                            <hr class="hr-space">
+                            <div class="row align-items-center">
+                                <div class="col-md-4 fw6 mb-1">
+                                   Total Rewards </div>
+                                <div class="col-md-8">
+                                    <div>
+                                        {{reward}} SDX</div>
+                                </div>
+                            </div>
+                            <hr class="hr-space">
+                            <div class="row align-items-center">
+                                <div class="col-md-4 fw6 mb-1">
+                                    Total Epoch / Blocks </div>
+                                <div class="col-md-8">
+                                    <div>
+                                        {{totalEpoch}} / {{totalBlocks}}</div>
+                                </div>
+                            </div>
+
+                            <!-- <hr class="hr-space">
+                            <div class="row align-items-center">
+                                <div class="col-md-4 fw6 mb-1">
+                                    Price </div>
+                                <div class="col-md-8">
+                                    <div>
+                                        $441.9752 </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+                <!-- end Overview -->
+                
+             
+            </div>
+        </div>
+    </section>
+    <!-- end Address Details -->
+
+<!-- start Transaction Details -->
+<section id="transactionDetails" class="mb-4">
+    <div class="container">
+        <div class="row">
+
+            <!-- start Transactions -->
+            <div class="portlet col-lg-12 mb-4 mb-lg-0 safari-float-left">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center p-0">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-custom nav-borderless nav_tabs1" id="nav_tabs" role="tablist" >
+                            <li ng-class="{active: activeTab == 'tab_addr_1' || !activeTab}" class="nav-item"><a class="nav-link active" href="#allTransactions" role="tab" data-toggle="tab"> Masternode Rewards</a></li>
+                        </ul>
+                        <!-- Nav tabs -->
+                    </div>
+
+                    <div id="block-overview" class="card-body">
+
+                        <div class="tab-content">
+                            <div class="tab-pane fade active show" id="allTransactions">
+                                <div class="table-responsive" ng-class="{active: activeTab == 'tab_addr_1' || !activeTab}" >
+                            <table id="address-transaction" class="table table-hover nowrap" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <tr role="row" class="heading">
+                                            <th width="12%"> Epoch</th>
+                                            <th width="12%"> Sign Number </th>
+                                            <th width="12%"> Status </th>
+                                            <th width="12%"> Reward </th>
+                                            <th width="12%"> Age </th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                            </div>
+                       </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end Transactions -->
+        </div>
+    </div>
+</section>
+<!-- end Transaction Details -->
+
+<!-- BEGIN PAGE CONTENT-->
+<!--script type="text/javascript">
+</script-->
+    <!--[if lte IE 8]>
+        <script src="excanvas.js"></script>
+    <![endif]-->
+
+<!-- <div class="row">
+        <table width="100%">
+            <tr >
+                <td width="15%" height="25">Masternode ID  </td> <td><span class="eth-stat-text">{{witness}}</span></td>
+                <td width="15%" height="25">Masternode Rewards</td> <td><span class="eth-stat-text">{{reward}}</span> <font style="color:darkgrey">SDX</font></td>
+            </tr>
+            <tr >
+                <td width="15%" height="25">Block Time</td> <td><span class="eth-stat-text">{{blockTime}}</span> <font style="color:darkgrey">s</font></td>
+                <td width="15%" height="25">Total Blocks   </td> <td><span class="eth-stat-text">{{totalBlocks}}</span></td>
+            </tr>
+            <tr >
+                <td width="15%" height="25">Week Mean Rewards</td> <td><span class="eth-stat-text">{{weekMeanRewards}}</span></td>
+                <td width="15%" height="25">   </td> <td><span class="eth-stat-text"></span></td>
+            </tr>
+            <tr ><td width="15%" height="25"></td> <td></td> <td width="15%" height="25"></td> <td></td></tr>
+        </table>
+
+        <div id="container" width="400" height="450">
+            <canvas id="myChart" ></canvas>
+        </div>
+        <br>
+        <br>
+        
+        
+        <div class="tab-pane" id="tab_addr_1" ng-class="{active: activeTab == 'tab_addr_1'}">
+            <div class="table-scrollable">
+                <table class="table table-condensed">
+                    <thead>
+                        <tr>
+                            <th> Height </th>
+                            <th> Time </th>
+                            <th> Gas(wei)</th>
+                            <th> Hash </th>
+                            <th> Mined By </th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="block in blocks track by $index">
+                            <td> <a href="/block/{{block.number}}">{{block.number}}</a> </td>
+                            <td>({{block.timestamp | timeDuration}} ago)</td>
+                            <td>{{block.gasUsed | number}}</td>
+                            <td >{{block.hash}}</td>
+                            <td><a href="/addr/{{block.miner}}">{{block.miner}}</a></td>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+                <ul class="pager">
+                    <li class="previous">
+                        <a ng-click="switchPage(page-1)"> ← Newer </a>
+                    </li>
+                    <li class="next">
+                        <a ng-click="switchPage(page+1)"> Older → </a>
+                    </li>
+                </ul>
+              </div>
+        </div>
+  
+</div> -->

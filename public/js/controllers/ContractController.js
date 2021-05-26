@@ -36,8 +36,8 @@ angular.module('BlocksApp').controller('ContractController', function($statePara
 
       // validate
       
-      if (!isAddress($scope.contract.address)) 
-        $scope.errors.address = "Invalid Address";
+      // if (!isAddress($scope.contract.address)) 
+      //   $scope.errors.address = "Invalid Address";
       if (typeof $scope.contract.name == "undefined")          
         $scope.errors.name = "Contract Name Required";
       if (typeof $scope.contract.version == "undefined")

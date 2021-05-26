@@ -1,37 +1,36 @@
 /*
-  Stuff to deal with verified contracts in DB
+  Stuff to deal with verified contracts in DB 
 */
 
-require('../db.js');
-const mongoose = require('mongoose');
+require( '../db.js' );
+var mongoose = require( 'mongoose' );
+var Contract     = mongoose.model( 'Contract' );
 
-const Contract = mongoose.model('Contract');
-
-exports.addContract = function (contract) {
+exports.addContract = function(contract) {
   Contract.update(
-    { address: contract.address },
-    { $setOnInsert: contract },
-    { upsert: true },
-    (err, data) => {
-      console.log(data);
-    },
+    {address: contract.address}, 
+    contract,
+    {upsert: true}, 
+    function (err, data) {
+      console.log(err,data);
+    }
   );
-};
+}
 
-exports.findContract = function (address, res) {
-  const contractFind = Contract.findOne({ address }).lean(true);
-  contractFind.exec((err, doc) => {
+exports.findContract = function(address, res) {
+  var contractFind = Contract.findOne({ address : address}).lean(true);
+  contractFind.exec(function(err, doc) {
     if (err) {
-      console.error(`ContractFind error: ${err}`);
-      console.error(`bad address: ${address}`);
-      res.write(JSON.stringify({ 'error': true, 'valid': false }));
-    } else if (!doc || !doc.sourceCode) {
-      res.write(JSON.stringify({ 'valid': false }));
+      console.error("ContractFind error: " + err);
+      console.error("bad address: " + address);
+      res.write(JSON.stringify({"error": true, "valid": false}));
+    } else if (!doc) {
+      res.write(JSON.stringify({"valid": false}));
     } else {
-      const data = doc;
-      data.valid = true;
+      var data = doc;
+      data.valid = doc.sourceCode!=null;
       res.write(JSON.stringify(data));
     }
     res.end();
-  });
-};
+  })
+}

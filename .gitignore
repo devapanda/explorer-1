@@ -32,12 +32,16 @@ jspm_packages
 
 # Optional npm cache directory
 .npm
+config.json
 
 # Optional REPL history
 .node_repl_history
 
 # local data
 data/
-config.json
+package-lock.json
+public/js/stats/The_bomb_chart.js
 .node-xmlhttprequest-*
 /nbproject/private/
+public/views/richlist.js
+.idea

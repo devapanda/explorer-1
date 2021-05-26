@@ -1,136 +1,343 @@
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SwapDex Explorer</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">  
+    <link rel="apple-touch-icon" sizes="57x57" href="/img/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/img/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/img/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/img/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/img/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/img/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/img/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/img/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/img/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/img/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">  
+    
 <!-- BEGIN HEADER TOP -->
 <div class="page-header-top">
-  <div class="container">
+    <div class="container">
+
     <!-- BEGIN LOGO -->
-    <div class="page-logo">
-      <a href="/">
-      <img ng-show="settings.logo" src="{{settings.logo}}" alt="logo" class="logo-default" />
-      </a>
+    <!-- <div class="page-logo">
+        <a href="/">
+            <img src="/img/sdx-logo.png" alt="logo" class="logo-default" />
+
+        </a>
+    </div> -->
+    <!-- start Header -->
+<header id="header" class="header">
+<div class="header_section py-1">
+<div id="logoAndNav" class="container">
+    <nav class="js-mega-menu navbar navbar-expand-md header_navbar header_navbar-no-space">
+    <div class="logo">
+        <a class="navbar-brand" href="/">
+            <img id="logo-header" src="/img/sdx-logo.png" class="logo img-fluid" alt="SwapDex Logo">
+        </a>
     </div>
     <!-- END LOGO -->
-    <!-- BEGIN RESPONSIVE MENU TOGGLER -->
-    <a href="#" class="menu-toggler btn btn-sm green-haze btn-outline">MENU</a>
-    <!-- END RESPONSIVE MENU TOGGLER -->
-    <!-- BEGIN TOP NAVIGATION MENU -->
-    <div class="top-menu">
-      <ul class="nav navbar-nav pull-right">
-        <li class="dropdown">
-          <form name="form.searchForm" class="search-form">
-            <div class="input-group">
-              <input type="text" name="explorerSearch" class="form-control" placeholder="Search by Address / Txhash / BlockNum / BlockHash" ng-model="form.searchInput" ng-keyup="$event.keyCode == 13 ? searchQuery(form.searchInput) : null">
-              <span class="input-group-btn">
-              <a class="btn" ng-click="searchQuery(form.searchInput)">
-              <i class="icon-magnifier"></i>
-              </a>
-              </span>
-            </div>
-          </form>
-        </li>
-      </ul>
-    </div>
-    <!-- END TOP NAVIGATION MENU -->
-  </div>
+            <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+        <!-- <a href="javascript:;" class="menu-toggler btn btn-sm green-haze btn-outline">MENU</a> -->
+        <!-- END RESPONSIVE MENU TOGGLER -->
+        <!-- BEGIN TOP NAVIGATION MENU -->
+        <button type="button" class="navbar-toggler btn hamburger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navBar" data-toggle="collapse" data-target="#navBar">
+                <span id="hamburgerTrigger" class="hamburger_box"><span class="hamburger_inner"></span></span>
+            </button>
+             <div class="navigation d-flex flex-column w-100"> 
+            <div id="navBar" class="collapse navbar-collapse header_navbar-collapse order-md-2">
+                    <ul class="navbar-nav header_navbar-nav px-2 px-md-0">
+                        <li class="nav-item header_nav-item" data-event="hover">
+                            <a class="nav-link header_nav-link" href="/" aria-haspopup="true" aria-expanded="false" aria-labelledby="pagesSubMenu">Home</a>
+                        </li>
+                        <li class="nav-item header_nav-item" data-event="hover">
+                            <a class="nav-link header_nav-link" href="/accounts" aria-haspopup="true" aria-expanded="false" aria-labelledby="pagesSubMenu">Accounts</a>
+                        </li>
+                        <!-- <li class="nav-item hs-has-sub-menu header_nav-item" data-event="hover">
+                            <a id="addressMegaMenu" class="nav-link header_nav-link header_nav-link-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-labelledby="addressSubMenu">Address</a>
+                            <ul id="addressSubMenu" class="hs-sub-menu header_sub-menu header_sub-menu-spacer" aria-labelledby="addressMegaMenu" style="min-width: 230px;">
+                                <li><a href="/addressList/all" class="nav-link header_sub-menu-nav-link">All Address</a></li>
+                                <li><a href="/addressList/normal" class="nav-link header_sub-menu-nav-link">Normal Address</a></li>
+                                <li><a href="/addressList/contract" class="nav-link header_sub-menu-nav-link">Contracts Address</a></li>
+                                <li><a href="/addressList/blacklist" class="nav-link header_sub-menu-nav-link">Blacklist Address</a></li>
+                            </ul>
+                        </li> -->
+                        <li class="nav-item hs-has-sub-menu header_nav-item" data-event="hover">
+                            <a id="contractsMegaMenu" class="nav-link header_nav-link header_nav-link-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-labelledby="contractsSubMenu">Contracts</a>
+
+                            <ul id="contractsSubMenu" class="hs-sub-menu header_sub-menu header_sub-menu-spacer" aria-labelledby="contractsMegaMenu" style="min-width: 230px;">
+                                <li><a href="/tokenlist/" class="nav-link header_sub-menu-nav-link">Tokens</a></li>
+                                <li><a href="/contractlist/" class="nav-link header_sub-menu-nav-link">Contracts</a></li>
+                                <li><a href="/verifycontract/" class="nav-link header_sub-menu-nav-link">Verify Contract</a></li>
+
+                            </ul>
+                        </li>
+                        <!--<li class="nav-item hs-has-sub-menu header_nav-item" data-event="hover" data-animation-in="slideInUp" data-animation-out="fadeOut">
+                            <a id="toolsMegaMenu" class="nav-link header_nav-link header_nav-link-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-labelledby="toolsSubMenu">Tools</a>
+                            <ul id="toolsSubMenu" class="hs-sub-menu header_sub-menu header_sub-menu-spacer" aria-labelledby="toolsMegaMenu" style="min-width: 230px;">
+                                <li><a href="https://chrome.google.com/webstore/detail/xinpay/bocpokimicclpaiekenaeelehdjllofo" class="nav-link header_sub-menu-nav-link" title="XinPay" target="_blank">XinPay</a></li>
+                                <li><a href="https://wallet.xinfin.network" class="nav-link header_sub-menu-nav-link" title="Web Wallet" target="_blank">Web Wallet</a></li>
+                                <li><a href="https://play.google.com/store/apps/details?id=com.xdcwallet&hl=en" class="nav-link header_sub-menu-nav-link" title="Android Wallet" target="_blank">Android Wallet</a></li>
+                                <li><a href="https://remix.xinfin.network/" class="nav-link header_sub-menu-nav-link" title="XinFin Remix" target="_blank">XinFin Remix</a></li>
+                                <li><a href="https://xinfin.org/setup-masternode" class="nav-link header_sub-menu-nav-link" title="One-Click Installler" target="_blank">One-Click Installer</a></li>
+                            </ul>
+                        </li>-->
+						<li class="nav-item hs-has-mega-menu header_nav-item" data-event="hover" data-animation-in="slideInUp" data-animation-out="fadeOut" data-position="left">
+							<a id="toolsMegaMenu" class="nav-link header_nav-link header_nav-link-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false">Tools</a>
+							<div class="hs-mega-menu w-100 header_sub-menu hs-position-right" aria-labelledby="toolsMegaMenu">
+								<div class="row header_mega-menu-wrapper">
+									<div class="col-sm-6 col-md-4 col-lg mb-3 mb-lg-0">
+										<span class="header_sub-menu-title">Live Network</span>
+										<ul class="header_sub-menu-nav-group mb-3">
+											<li><a class="nav-link header_sub-menu-nav-link" href="https://wallet.xinfin.network/" target="_blank"><i class="fa fa-angle-right small mr-1"></i>Web Wallet</a></li>
+											<li><a class="nav-link header_sub-menu-nav-link" href="https://play.google.com/store/apps/details?id=com.xdcwallet" target="_blank"><i class="fa fa-angle-right small mr-1"></i>Android Wallet</a></li>
+											<li><a class="nav-link header_sub-menu-nav-link" href="https://xinfin.network/#explorer" target="_blank"><i class="fa fa-angle-right small mr-1"></i>Block Explorer</a></li>
+											<!--<li><a class="nav-link header_sub-menu-nav-link" href="https://xinfin.org/setup-masternode" target="_blank"><i class="fa fa-angle-right small mr-1"></i>One-Click Node Installer</a></li>-->
+											<li><a class="nav-link header_sub-menu-nav-link" href="https://xinfin.network/#masternode" target="_blank"><i class="fa fa-angle-right small mr-1"></i>Become a Master Node/Validator</a></li>
+										</ul>
+									</div>
+									<div class="col-sm-6 col-md-4 col-lg mb-1 mb-lg-0">
+										<span class="header_sub-menu-title">SandBox / TestNet</span>
+										<ul class="header_sub-menu-nav-group mb-3">
+											<li><a class="nav-link header_sub-menu-nav-link" href="https://apothem.network/#getTestXDC" target="_blank"><i class="fa fa-angle-right small mr-1"></i>Faucet</a></li>
+											<li><a class="nav-link header_sub-menu-nav-link" href="https://wallet.apothem.network/" target="_blank"><i class="fa fa-angle-right small mr-1"></i>Web Wallet</a></li>
+											<li><a class="nav-link header_sub-menu-nav-link" href="https://explorer.apothem.network/home" target="_blank"><i class="fa fa-angle-right small mr-1"></i>Block Explorer</a></li>
+											<li><a class="nav-link header_sub-menu-nav-link" href="https://apothem.network/#masternode" target="_blank"><i class="fa fa-angle-right small mr-1"></i>Become a Master Node/Validator</a></li>
+										</ul>
+									</div>
+									<div class="col-sm-6 col-md-4 col-lg mb-1 mb-lg-0">
+										<span class="header_sub-menu-title">Supported Wallets</span>
+										<ul class="header_sub-menu-nav-group mb-3">
+											<li><a class="nav-link header_sub-menu-nav-link" href="https://guarda.com/" target="_blank"><i class="fa fa-angle-right small mr-1"></i>Guarda Wallet</a></li>
+											<li><a class="nav-link header_sub-menu-nav-link" href="https://dcentwallet.com/MobileApp" target="_blank"><i class="fa fa-angle-right small mr-1"></i>D'CENT Wallet</a></li>
+                                            <li><a class="nav-link header_sub-menu-nav-link" href="https://dcentwallet.com/products/BiometricWallet" target="_blank"><i class="fa fa-angle-right small mr-1"></i>D'CENT Hardware Wallet</a></li>
+										</ul>
+									</div>
+                                    <div class="col-sm-6 col-md-4 col-lg mb-1 mb-lg-0">
+										<span class="header_sub-menu-title">More</span>
+										<ul class="header_sub-menu-nav-group mb-3">
+											<li><a class="nav-link header_sub-menu-nav-link" href="https://chrome.google.com/webstore/detail/xinpay/bocpokimicclpaiekenaeelehdjllofo" target="_blank"><i class="fa fa-angle-right small mr-1"></i>XinPay</a></li>
+											<li><a class="nav-link header_sub-menu-nav-link" href="https://remix.xinfin.network/" target="_blank"><i class="fa fa-angle-right small mr-1"></i>XinFin Remix</a></li>
+											<li><a class="nav-link header_sub-menu-nav-link" href="https://xinfin.org/setup-masternode" target="_blank"><i class="fa fa-angle-right small mr-1"></i>One-Click Node Installer</a></li>
+                                            <li><a class="nav-link header_sub-menu-nav-link" href="/dapps"><i class="fa fa-angle-right small mr-1"></i>Explore dApps</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li class="nav-item header_nav-item" data-event="hover">
+                            <a class="nav-link header_nav-link" href="/publicAPIDoc" aria-haspopup="true" aria-expanded="false" aria-labelledby="pagesSubMenu">SwapDex APIs</a>
+                        </li>
+                    </ul>
+                </div>
+        </div> 
+        <!-- END TOP NAVIGATION MENU -->
+    </nav>
+	</div>
 </div>
+</header>
+
+<!-- end Header -->
 <!-- END HEADER TOP -->
 <!-- BEGIN HEADER MENU -->
-<div class="page-header-menu">
-  <div class="container">
-    <!-- BEGIN MEGA MENU -->
-    <div class="hor-menu hor-menu-light">
-      <ul class="nav navbar-nav">
-        <li class="active">
-          <a href="/">Home</a>
-        </li>
-        <li ng-show="settings.useRichList">
-          <a href="/accounts">Accounts</a>
-        </li>
-        <li>
-          <a href="/token">Tokens</a>
-        </li>
-        <li class="menu-dropdown mega-menu-dropdown ">
-          <a data-hover="megamenu-dropdown" data-close-others="true" data-toggle="dropdown" href="#" class="dropdown-toggle"> Stats
-          <i class="fa fa-angle-down"></i>
-          </a>
-          <ul class="dropdown-menu">
-            <li>
-              <div class="mega-menu-content">
-                <div class="row">
-                  <div class="col-md-12">
-                    <ul class="mega-menu-submenu">
-                      <li>
-                        <a href="/stats/hashrate">
-                        <i class="fa fa-line-chart"></i> Hashrate Chart </a>
-                      </li>
-                      <li>
-                        <a href="/stats/miner_hashrate">
-                        <i class="fa fa-line-chart"></i> Miner Distribution Chart</a>
-                      </li>
-                      <li>
-                        <a href="/stats/difficulty">
-                        <i class="fa fa-line-chart"></i> Difficulty Chart</a>
-                      </li>
-                      <li>
-                        <a href="/stats/blocktime">
-                        <i class="fa fa-line-chart"></i> Blocktime Chart</a>
-                      </li>
-                    </ul>
-                  </div>
+<div class="page-header-menu">    
+    <!--<div class="container">-->
+
+        <!-- BEGIN MEGA MENU -->
+  <!-- start Wrapper -->
+  <div class="wrapper">
+        <!-- start search box -->
+        <section id="searchbox" name="form.searchForm" >
+            <!--<div class="container">-->
+			<div class="space-top-2 space-bottom-2">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-md-12 col-lg-7">                        
+                        <!--<div class="card mb-4">
+                            <div class="card-body gradient-primary">
+                                <div class="form-group mb-1 row">
+                                    <form name="form.searchForm" class="search-form"></form>
+                                    <label class="col-md-12 text-white search-control-label mb-2" for="example-input1-group3">SDX Explorer</label>
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend d-none d-md-block">
+                                                <select name="f" class="custom-select custom-arrow-select input-group-text font-size-base filterby">
+                                                    <option selected="" value="0">All Filters</option>
+                                                    <option value="1">Addresses</option>
+                                                    <option value="2">Tokens</option>
+                                                    <option value="3">Nametags</option>
+                                                    <option value="4">Labels</option>
+                                                    <option value="5">Websites</option>
+                                                </select>
+                                            </div>
+                                            <input type="text" id="example-input1-group3" name="example-input1-group3" class="form-control search-filter-input" placeholder="Search by Address, Block Number, Transaction ID, Address" ng-model="form.searchInput" ng-keyup="$event.keyCode == 13 ? searchQuery(form.searchInput) : null">
+                                            <span class="input-group-append"><button type="button" class="btn btn-primary" ng-click="searchQuery(form.searchInput)">SEARCH</button></span></div>
+                                    </div>
+                                </div>
+                            </form>
+                            </div>
+                        </div>-->    
+                        <div class="form-group mb-1 row">
+                        	<form name="form.searchForm" class="search-form"></form>
+                            <label class="col-md-12 text-white search-control-label mb-3" for="example-input1-group3">SDX Explorer</label>
+                            <div class="col-md-12">
+                               	<div class="input-group">
+                                	<div class="input-group-prepend d-none d-md-block">
+                                       	<select name="f" class="custom-select custom-arrow-select input-group-text font-size-base filterby">
+                                        	<option selected="" value="0">All Filters</option>
+                                            <option value="1">Addresses</option>
+                                            <option value="2">Tokens</option>
+                                            <option value="3">Nametags</option>
+                                            <option value="4">Labels</option>
+                                            <option value="5">Websites</option>
+                                        </select>
+                                    </div>
+                                    <input type="text" id="example-input1-group3" name="example-input1-group3" class="form-control search-filter-input" placeholder="Search by Address, Block Number, Transaction ID, Address" ng-model="form.searchInput" ng-keyup="$event.keyCode == 13 ? searchQuery(form.searchInput) : null">
+                                    <span class="input-group-append"><button type="button" class="btn btn-primary" ng-click="searchQuery(form.searchInput)"><i class="fa fa-search"></i></button></span>
+                                </div>
+                        	</div>
+                        </div>
+                        <p class="avertisement text-white-70 mb-0" style="min-height:22px"><b>TradeFinex:</b> A Blockchain Network for Trade Finance Originators to Distribute Trade Assets. <a href="https://tradefinex.org/" target="_blank"><b>Join The Network</b></a></p>
+                    </div>
+                    <div class="col-12 col-lg-5">
+                        <!--<div class="extraimg-banners d-none d-lg-block text-center pl-lg-4 pl-xll-5">
+                            <a class="d-inline-block d-sm-none position-relative text-dark" target="_blank" href="https://www.xceltrip.com/">
+                            	<img class="img-fluid rounded-7" src="/img/extraimg/xceltrip_321x101.jpg" alt="XcelTrip">
+                            </a>
+                            <a class="d-none d-sm-inline-block d-lg-none position-relative text-dark" target="_blank" href="https://www.xceltrip.com/">
+                            	<img class="img-fluid rounded-7" src="/img/extraimg/xceltrip_730X90.jpg" alt="XcelTrip">
+                            </a>
+                            <a class="d-none d-lg-inline-block position-relative text-dark" target="_blank" href="https://www.xceltrip.com/">
+                            	<img class="img-fluid rounded-7" src="/img/extraimg/xceltrip_321x101.jpg" alt="XcelTrip">
+                            </a>
+                        </div>-->
+                        
+                        
+                        <div class="extraimg-banners d-none d-lg-block text-center pl-lg-4 pl-xll-5">                        
+                            <div id="slider">
+                                <figure>
+                                    <a href="https://dcentwallet.com/Shop/detail/fcea8887cece407a8e433b0964de9d5f?utm_medium=affiliate&utm_source=XDCOfficial&utm_campaign=202101-XDCOfficial-Biometric-promo&lang=en" target="_blank"><img class="img-fluid" src="/img/extraimg/dcentWallet_321x101.jpg" alt="D'CENT Biometric Wallet"></a>
+                                    <a href="https://www.xceltrip.com/" target="_blank"><img class="img-fluid" src="/img/extraimg/xceltrip_321x101.jpg" alt="XcelTrip"></a>
+                                    <a href="https://www.tradefinex.org/" target="_blank"><img class="img-fluid" src="/img/extraimg/tradefinex_321x101.jpg" alt="TradeFinex"></a>
+                                    <a href="https://www.mycontract.co/" target="_blank"><img class="img-fluid" src="/img/extraimg/mycontract_321x101.jpg" alt="MyContract"></a>
+                                    <a href="https://blockdegree.org/" target="_blank"><img class="img-fluid" src="/img/extraimg/blockdegree_321x101.jpg" alt="Blockcdegree"></a>
+                                    <a href="https://dcentwallet.com/Shop/detail/fcea8887cece407a8e433b0964de9d5f?utm_medium=affiliate&utm_source=XDCOfficial&utm_campaign=202101-XDCOfficial-Biometric-promo&lang=en" target="_blank"><img class="img-fluid" src="/img/extraimg/dcentWallet_321x101.jpg" alt="D'CENT Biometric Wallet"></a>
+                                </figure>
+                            </div>
+                            
+                            <!--<div id="imageSliderTop">
+                                <ul>
+                                    <li><a href="https://blockdegree.org/" target="_blank"><img class="img-fluid" src="/img/extraimg/blockdegree_321x101.jpg" alt="Blockdegree"></a></li>
+                                    <li><a href="https://www.mycontract.co/" target="_blank"><img class="img-fluid" src="/img/extraimg/mycontract_321x101.jpg" alt="MyContract"></a></li>
+                                    <li><a href="https://www.tradefinex.org/" target="_blank"><img class="img-fluid" src="/img/extraimg/tradefinex_321x101.jpg" alt="TradeFinex"></a></li>
+                                    <li><a href="https://www.xceltrip.com/" target="_blank"><img class="img-fluid" src="/img/extraimg/xceltrip_321x101.jpg" alt="XcelTrip"></a></li>
+                                    <li><a href="https://dcentwallet.com/Shop/detail/fcea8887cece407a8e433b0964de9d5f?utm_medium=affiliate&utm_source=XDCOfficial&utm_campaign=202101-XDCOfficial-Biometric-promo&lang=en" target="_blank"><img class="img-fluid" src="/img/extraimg/dcentWallet_321x101.jpg" alt="D'CENT Biometric Wallet"></a></li>
+                                </ul>
+                            </div>
+                        </div>-->
+                        
+                        <!--<div class="extraimg-banners d-none d-lg-block text-center pl-lg-4 pl-xll-5">                        
+                        <div id="slider" class="rounded-7">                        
+                            <figure>
+                                <a href="https://dcentwallet.com/Shop/detail/fcea8887cece407a8e433b0964de9d5f?utm_medium=affiliate&utm_source=XDCOfficial&utm_campaign=202101-XDCOfficial-Biometric-promo&lang=en" target="_blank"><img class="img-fluid" src="/img/extraimg/dcentWallet_321x101.jpg" alt="D'CENT Biometric Wallet"></a>
+                                <a href="https://www.xceltrip.com/" target="_blank"><img class="img-fluid" src="/img/extraimg/xceltrip_321x101.jpg" alt="XcelTrip"></a>
+                                <a href="https://www.tradefinex.org/" target="_blank"><img class="img-fluid" src="/img/extraimg/tradefinex_321x101.jpg" alt="TradeFinex"></a>
+                                <a href="https://www.mycontract.co/" target="_blank"><img class="img-fluid" src="/img/extraimg/mycontract_321x101.jpg" alt="MyContract"></a>
+                                <a href="https://dcentwallet.com/Shop/detail/fcea8887cece407a8e433b0964de9d5f?utm_medium=affiliate&utm_source=XDCOfficial&utm_campaign=202101-XDCOfficial-Biometric-promo&lang=en" target="_blank"><img class="img-fluid" src="/img/extraimg/dcentWallet_321x101.jpg" alt="D'CENT Biometric Wallet"></a>
+                            </figure>
+                        </div>
+                        </div>-->
+
+                        <!-- splide 
+                        <div class="extraimg-banners d-none d-lg-block text-center pl-lg-4 pl-xll-5">                            
+                            <div id="splide">    
+                                <div class="splide__track" id="splide-track">
+                                    <ul class="splide__list">
+                                        <li class="splide__slide">
+                                            <a href="https://dcentwallet.com/Shop/detail/fcea8887cece407a8e433b0964de9d5f?utm_medium=affiliate&utm_source=XDCOfficial&utm_campaign=202101-XDCOfficial-Biometric-promo&lang=en" target="_blank"><img class="img-fluid rounded-7" src="/img/extraimg/dcentWallet_321x101.jpg" alt="D'CENT Biometric Wallet"></a>
+                                        </li>                      
+                                        <li class="splide__slide">
+                                            <a href="https://www.xceltrip.com/" target="_blank"><img class="img-fluid rounded-7" src="/img/extraimg/xceltrip_321x101.jpg" alt="XcelTrip"></a>
+                                        </li>                            
+                                        <li class="splide__slide">
+                                            <a href="https://www.tradefinex.org/" target="_blank"><img class="img-fluid rounded-7" src="/img/extraimg/tradefinex_321x101.jpg" alt="TradeFinex"></a>
+                                        </li>
+                                        <li class="splide__slide">
+                                            <a href="https://www.mycontract.co/" target="_blank"><img class="img-fluid rounded-7" src="/img/extraimg/mycontract_321x101.jpg" alt="MyContract"></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div><!-- /.splide -->
+                    </div>
                 </div>
-              </div>
-            </li>
-          </ul>
-        </li>
-        <li class="menu-dropdown classic-menu-dropdown ">
-          <a data-hover="megamenu-dropdown" data-close-others="true" data-toggle="dropdown" href="#"> Misc
-          <i class="fa fa-angle-down"></i>
-          </a>
-          <ul class="dropdown-menu pull-left">
-            <li>
-              <a href="/contract">
-              <i class="icon-check"></i> Verify Contract </a>
-            </li>
-          </ul>
-        </li>
-        <li class="menu-dropdown classic-menu-dropdown ">
-          <a data-hover="megamenu-dropdown" data-close-others="true" data-toggle="dropdown" href="#"> Community
-          <i class="fa fa-angle-down"></i>
-          </a>
-          <ul class="dropdown-menu pull-left">
-            <li>
-              <a href="https://forum.ethereumclassic.org" target="_blank">
-              <i class="fa fa-group"></i>
-              <span class="title" data-toggle="tooltip" title="Community Chat"> The Forum</span>
-              </a>
-            </li>
-            <li>
-              <a href="https://tokenmint.io" target="_blank">
-              <i class="fa fa-leaf"></i>
-              <span class="title" data-toggle="tooltip" title="ERC223 Token Factory" > TokenMint.io</span>
-              </a>
-            </li>
-            <li>
-              <a href=" https://ethereumclassic.github.io/etherwallet/ " target="_blank">
-              <i class="fa fa-folder-open"></i>
-              <span class="title" data-toggle="tooltip" title="Client Side JS ETC Wallet"> ClassicEtherWallet.com</span>
-              </a>
-            </li>
-            <li>
-              <a href="https://2miners.com/etc-stats" target="_blank">
-              <i class="fa fa-bar-chart"></i>
-              <span class="title" data-toggle="tooltip" title="Mainnet Stats"> Live Network Stats </span>
-              </a>
-            </li>
-            <li>
-              <a href="http://statebot.info" target="_blank">
-              <i class="fa fa-android"></i>
-              <span class="title" data-toggle="tooltip" title="JSON state dumps for analysis"> Statebot.io </span>
-              </a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-    <!-- END MEGA MENU -->
-  </div>
+            </div>
+        </section>
+        <!-- end Search Box -->
+        
+</div>
+        <!-- END MEGA MENU -->
+    <!--</div>-->
 </div>
 <!-- END HEADER INNER -->
+
+
+
+<script>
+! function (i) {
+   "use strict";
+   var t = function () {};
+   t.prototype.initNavbar = function () {
+      i(".navbar-toggle").on("click", function (t) {
+         i(this).toggleClass("open"), i("#navigation").slideToggle(400)
+      }), i(".navigation-menu>li").slice(-1).addClass("last-elements"), i('.navigation-menu li.has-submenu a[href="#"]').on("click", function (t) {
+         i(window).width() < 992 && (t.preventDefault(), i(this).parent("li").toggleClass("open").find(".submenu:first").toggleClass("open"))
+      })
+   }, t.prototype.initLoader = function () {
+      i(window).load(function () {
+         i("#status").fadeOut(), i("#preloader").delay(350).fadeOut("slow"), i("body").delay(350).css({
+            overflow: "visible"
+         })
+      })
+   }, t.prototype.initComponents = function () {
+      //i('[data-toggle="tooltip"]').tooltip(), i('[data-toggle="popover"]').popover()
+	  //i('[data-toggle="tooltip"]').tooltip({trigger:'hover'}); i('[data-toggle="popover"]').popover({trigger:'hover'});
+	  $("body").tooltip({   
+		selector: "[data-toggle='tooltip']",
+		container: "body"
+	  })
+	
+   }, t.prototype.initToggleSearch = function () {
+      i(".toggle-search").on("click", function () {
+         var t = i(this).data("target");
+         t && i(t).toggleClass("open")
+      })
+   }, t.prototype.init = function () {
+      this.initNavbar(), this.initLoader(), this.initComponents()
+   }, i.MainApp = new t, i.MainApp.Constructor = t
+}(window.jQuery),
+function (t) {
+   "use strict";
+   window.jQuery.MainApp.init()
+}();
+
+
+// initialization of HSMegaMenu component
+//$(window).on('load', function () {
+   $('.js-mega-menu').HSMegaMenu({
+      event: 'hover',
+      pageContainer: $('.container'),
+      breakpoint: 767.98,
+      hideTimeOut: 0
+   });
+//});
+</script>
+
+
+

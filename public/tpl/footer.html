@@ -1,51 +1,90 @@
-<!-- BEGIN PRE-FOOTER -->
-<div class="page-prefooter">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-3 col-sm-6 col-xs-12 footer-block">
-        <h2>About</h2>
-        <p> {{settings.about}} </p>
-        <span ng-bind-html="settings.poweredbyCustom" ng-if="settings.poweredbyCustom">{{settings.poweredbyCustom}}</span>
-        <span ng-if="!settings.poweredbyCustom && settings.poweredbyEtcImage"><a href="https://github.com/ethereumclassic/explorer" target="_blank"><img height="51px" src="{{settings.poweredbyEtcImage}}"></a></span>
-        <p ng-if="!settings.poweredbyCustom && !settings.poweredbyEtcImage && settings.poweredbyEtc"> Powered by <a href="https://github.com/ethereumclassic/explorer" target="_blank">ETC Explorer</a> </p>
-      </div>
-      <div class="col-md-3 col-sm-6 col-xs-12 footer-block">
-        <h2>Follow Us On</h2>
-        <ul class="social-icons">
-          <li>
-            <a ng-show="settings.rss" href="{{settings.rss}}" data-original-title="rss" class="rss"></a>
-          </li>
-          <li>
-            <a ng-show="settings.reddit" href="{{settings.reddit}}" data-original-title="reddit" class="reddit"></a>
-          </li>
-          <li>
-            <a ng-show="settings.twitter" href="{{settings.twitter}}" data-original-title="twitter" class="twitter"></a>
-          </li>
-          <li>
-            <a ng-show="settings.github" href="{{settings.github}}" data-original-title="github" class="github"></a>
-          </li>
-          <li>
-            <a ng-show="settings.linkedin" href="{{settings.linkedin}}" data-original-title="linkedin" class="linkedin"></a>
-          </li>
-        </ul>
-      </div>
-      <div ng-show="settings.symbol == 'ETC'" class="col-md-6 col-sm-12 col-xs-12 footer-block">
-        <h2>Help, it's Broken!</h2>
-        <address class="margin-bottom-40">
-          <br>Open an Issue: <a href="https://github.com/ethereumclassic/explorer/issues">github</a>
-          <br> <a href="mailto:elaine.ou@gmail.com">Email bug reports</a>
-          <br> <a href="https://twitter.com/eiaine">Twit</a>
-        </address>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- END PRE-FOOTER -->
-<!-- BEGIN POST-FOOTER -->
-<div class="page-footer">
-  <div class="container" ng-bind-html="settings.copyright"></div>
-</div>
-<div class="scroll-to-top">
-  <i class="icon-arrow-up"></i>
-</div>
-<!-- END POST-FOOTER -->
+    <!-- start Footer -->
+	<footer class="footer gradient-primary py-4">
+        <div class="container">		
+		  <div class="row justify-content-md-between font-size-1 py-3">
+		  
+			<div class="col-12 col-lg-2 col-md-3 col-sm-6 col-xs-6 mb-2 mb-lg-0 order-lg-1 order-md-4 order-2">
+				<div class="d-flex h-100 flex-column">
+                	<div class="d-flex align-items-center mb-3">
+                    	<img width="90" src="/img/sdx-logo-footer.png" alt="SwapDex Logo">
+                    </div>
+                    <p>SwapDex is a Block Explorer and Analytics Platform for SDX, a decentralized smart contracts platform.</p>
+                    <div class="select-option cyptocurrency input-group-append">
+                    	<select class="select2-icon" name="icon" ng-change="changeCurrency(selCurrency)" ng-model="selCurrency">
+                            <option value="USD" selected data-image="/img/currency-icon/USD.svg">USD</option>
+                            <option value="EUR" data-image="/img/currency-icon/EUR.svg">EURO</option>
+                        	<option value="INR" data-image="/img/currency-icon/INR.svg">INR</option>
+                        </select>
+                    </div>
+            	</div>
+			</div>
+			<div class="col-12 col-lg-2 col-md-3 col-sm-6 col-xs-6 mb-4 pl-2 order-lg-2 order-md-2">
+				<h4 class="text-white heading-border">Community</h4>
+                    <ul class="list-group mb-0">
+                        <li><a class="list-group-item" href="#" target="_blank">About Community</a></li>
+						<li><a class="list-group-item" href="#" target="_blank">SwapDex Network Status</a></li>
+						<li><a class="list-group-item" href="#" target="_blank">Community Bounty Program</a></li>						
+						<li><a class="list-group-item" href="#" target="_blank">Developer Portal</a></li>
+						<li><a class="list-group-item" href="#" target="_blank">Setup MasterNode</a></li>
+						<li><a class="list-group-item" href="#" target="_blank">SDX/SDXe Utility</a>
+						<li><a class="list-group-item" href="#" target="_blank">Compliance</a>
+                    </ul>
+			</div>
+			<div class="col-12 col-lg-2 col-md-3 col-sm-6 col-xs-6 mb-4 order-lg-3 order-md-3">
+				<h4 class="text-white heading-border">Other Links</h4>
+                    <ul class="list-group mb-0">
+                        <li><a class="list-group-item" href="#" target="_blank">Read FAQ</a></li>
+						<li><a class="list-group-item" href="#" target="_blank">Exchange Listing Resource</a></li>
+						<li><a class="list-group-item" href="#" target="_blank">SDX/SDXE Exchange List</a></li>
+						<li><a class="list-group-item" href="#" target="_blank">Public DPoS Consensus</a></li>
+						<li><a class="list-group-item" href="#" target="_blank">Privacy Policy</a>
+						<li><a class="list-group-item" href="#" target="_blank">Disclaimer</a>
+						<li><a class="list-group-item" href="#" target="_blank">Press Inquiry</a>
+                    </ul>
+			</div>
+			<div class="col-12 col-lg-2 col-md-3 col-sm-6 col-xs-6 pl-2 mb-4 order-lg-4 order-md-1">
+				<h4 class="text-white heading-border">Follow Us</h4>
+                    <ul class="list-group mb-0">
+                        <li><a class="list-group-item" href="https://twitter.com/SwapdexO" rel="nofollow" target="_blank"><i class="fab fa-twitter mr-2"></i>Twitter</a></li>
+                        <li><a class="list-group-item" href="#" rel="nofollow" target="_blank"><i class="fab fa-facebook mr-2"></i>Facebook</a></li>
+                        <li><a class="list-group-item" href="https://github.com/69th-byte" rel="nofollow" target="_blank"><i class="fab fa-github mr-2"></i>Github</a></li>
+                        <li><a class="list-group-item" href="#" rel="nofollow" target="_blank"><i class="fab fa-linkedin mr-2"></i>LinkedIn</a></li>
+						<li><a class="list-group-item" href="#" rel="nofollow" target="_blank"><i class="fa fa-paper-plane mr-2"></i>Telegram</a></li>
+						<li><a class="list-group-item" href="#" rel="nofollow" target="_blank"><i class="fab fa-reddit mr-2"></i>Reddit</a></li>
+                    </ul>
+			</div>
+			<div class="col-12 col-sm-6 col-md-4 col-lg-3 pl-2 order-lg-5 order-md-5 order-5 d-sm-none d-md-none d-lg-block">
+				<h4 class="text-white heading-border">Latest Tweets</h4>
+                    <div class="twitter-wrapper" style="background-color:;">
+					<a class="twitter-timeline" href="https://twitter.com/SwapdexO?ref_src=twsrc%5Etfw" data-width="100%" data-height="270" data-chrome="nofooter noborders noscrollbar" data-cards="hidden" data-dnt="true" data-theme="light">Tweets by SwapDex_Official</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+					</div>
+			</div>
+			<!--<div class="col-12 col-md-4 col-lg-2 mb-4 pl-4">
+                    <h4 class="text-white heading-border">Company</h4>
+                    <ul class="list-group mb-0">
+                        <li><a class="list-group-item" href="https://xinfin.org/about.php" target="_blank">About Community</a></li>
+                        <li><a class="list-group-item" href="https://xinfin.org/xinfin-consensus.php" target="_blank">Public DPoS Consensus</a></li>
+                        <li><a class="list-group-item" href="https://xinfin.org/resources.php" target="_blank">Resource Guide</a></li>
+						<li><a class="list-group-item" href="https://github.com/XinFinOrg/Open-Hackathon" target="_blank">Online Hackathon</a></li>
+						<li><a class="list-group-item" href="https://xinfin.org/download.php" target="_blank">Download Logo</a></li>
+						<li><a class="list-group-item" href="https://xinfin.org/contactus.php" target="_blank">Contact XinFin</a></li>
+                    </ul>
+                </div>-->
+				
+		  </div>
+		  
+            <hr class="opacity-md">
+            <div class="row text-center">
+                <div class="col-md-12 mb-md-0">
+                    <p class="mb-0">© 2021 SwapDex. All Rights Reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+	<!-- end Footer -->
+    
+    
+    
+<!-- Currency selector js starts -->
+<script src="js/select2/select2.min.js"></script>
+<!-- Currency selector js ends -->
